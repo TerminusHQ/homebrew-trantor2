@@ -1,0 +1,56 @@
+include:
+  - ../infra.yml
+services:
+  trantor2-web:
+    image: registry.erda.cloud/trantor/trantor2-combine-web:combine-web-3463fb8-test.240823.120759
+    container_name: trantor2-web
+    restart: on-failure
+    expose:
+      - 8099
+    ports:
+      - '${TRANTOR_WEB_PORT:-8099}:8099'
+    environment:
+      BACKEND_URL: http://trantor2-backend:8080
+      NGINX_PORTAL_SERVER_NAME: portal-local.app.terminus.io
+      SERVICE_TRANTOR_HOST: http://portal-local.app.terminus.io
+      SERVICE_OSS_PREFIX: https://terminus-new-trantor.oss-cn-hangzhou.aliyuncs.com/fe-resources/test
+      NGINX_CONSOLE_SERVER_NAME: console-local.app.terminus.io
+      NGINX_IAM_SERVER_NAME: portal-iam-local.app.terminus.io console-iam-local.app.terminus.io
+
+  trantor2-backend:
+    image: registry.erda.cloud/trantor/trantor2-unify-runtime:240823.120800.DEV-SNAPSHOT
+    container_name: trantor2-backend
+    restart: on-failure
+    expose:
+      - 8082
+    ports:
+      - '${TRANTOR_PORT:-8082}:8080'
+    environment:
+      MYSQL_HOST: mysql
+      MYSQL_PORT: 3306
+      MYSQL_USERNAME: root
+      MYSQL_PASSWORD: '${MYSQL_PASSWORD:-password}'
+      REDIS_ENABLED: 'true'
+      REDIS_HOST: redis
+      REDIS_PASSWORD: '${REDIS_PASSWORD:-password}'
+      UC_MOCK_ENABLE: '${UC_MOCK_ENABLE:-false}'
+      AUTO_DDL_TYPE: update
+      TOKEN_EXPIRE_TIME: 259200
+      IAM_CACHE_STORAGE: Redis
+      IAM_AUDIT_LOG_ENABLED: false
+      IAM_DESENSITIZE_ENABLED: true
+      IAM_STORAGE_ENCRYPT_ENABLED: true
+      IAM_DATA_PERMISSION_ENABLED: true
+      IAM_FIELD_PERMISSION_ENABLED: true
+      IAM_FUNCTION_PERMISSION_ENABLED: true
+      IAM_TRANSMISSION_ENCRYPT_ENABLED: true
+      TOKEN_NAME_DYNAMIC_ENABLED: false
+      IAM_HOST: http://trantor2-backend:8080
+      TRANTOR2_CONSOLE_DOMAIN: http://trantor2-web:8099
+      #todo 可配置
+      PORTAL_MAIN_DOMAIN: http://portal-local.app.terminus.io
+      CONSOLE_IAM_DOMAIN: http://console-iam-local.app.terminus.io
+      PORTAL_IAM_DOMAIN: http://portal-iam-local.app.terminus.io
+    depends_on:
+      - mysql
+      - redis
