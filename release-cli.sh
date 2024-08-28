@@ -107,8 +107,6 @@ cd $BUILD_TEMP_FOLDER
 git clone "https://$GITHUB_TOKEN"@github.com/TerminusHQ/homebrew-trantor2.git
 sed "s/{{version}}/$CURRENT_VERSION/g" ../trantor2-homebrew.rb | sed "s/{{trantor_cli_file_sha256}}/$trantor_cli_file_sha256/g" >"trantor2.rb"
 mv trantor2.rb homebrew-trantor2/trantor2.rb
-echo "hhhhhh"
-cat homebrew-trantor2/trantor2.rb
 cd homebrew-trantor2
 git add trantor2.rb
 git commit -am "update trantor cli version to [$CURRENT_VERSION], trantor commit[$trantor_git_commit]"
