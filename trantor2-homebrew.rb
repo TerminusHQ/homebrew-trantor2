@@ -1,4 +1,4 @@
-class Trantor < Formula
+class Trantor2 < Formula
   desc "Terminus Trantor2 CLI"
   homepage "https://www.terminus.io/"
   url "https://terminus-trantor.oss-cn-hangzhou.aliyuncs.com/tools/cli/trantor2-cli.latest.tar.gz"
