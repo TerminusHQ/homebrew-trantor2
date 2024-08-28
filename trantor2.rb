@@ -3,7 +3,7 @@ class Trantor2 < Formula
   homepage "https://www.terminus.io/"
   url "https://terminus-trantor.oss-cn-hangzhou.aliyuncs.com/tools/cli2/trantor2-cli.latest.tar.gz"
   version "0.0.1"
-  sha256 "16a7542334f43f49b9bac5de46bef5875423e9c7077ce0d418712cb76945bc36"
+  sha256 "27e55328e33eddd81a18415b0fa55d03e477d70ea34fcecea2ca45b7acba1c8d"
 
 #   depends_on "docker"
 
@@ -23,7 +23,6 @@ class Trantor2 < Formula
 
   def install
     # Remove windows files
-    lib.install Dir["lib/*"]
     libexec.install Dir["libexec/*"]
     (bin/"trantor2").write buildExe()
   end
