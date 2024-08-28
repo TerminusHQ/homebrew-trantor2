@@ -1,7 +1,7 @@
 class Trantor2 < Formula
   desc "Terminus Trantor2 CLI"
   homepage "https://www.terminus.io/"
-  url "https://terminus-trantor.oss-cn-hangzhou.aliyuncs.com/tools/cli/trantor2-cli.latest.tar.gz"
+  url "https://terminus-trantor.oss-cn-hangzhou.aliyuncs.com/tools/cli2/trantor2-cli.latest.tar.gz"
   version "{{version}}"
   sha256 "{{trantor_cli_file_sha256}}"
 

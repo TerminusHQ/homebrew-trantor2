@@ -83,9 +83,9 @@ fi
 # 上传到OSS
 i "upload trantor2-cli to OSS..."
 $BUILD_TEMP_FOLDER/oss-upload-tools/ossutil config -e oss-cn-hangzhou.aliyuncs.com -i "$OSS_ACCESS_KEY_ID" -k "$OSS_ACCESS_KEY_SECRET"
-$BUILD_TEMP_FOLDER/oss-upload-tools/ossutil cp ./trantor2-cli/install.sh oss://terminus-trantor/tools/cli/
-$BUILD_TEMP_FOLDER/oss-upload-tools/ossutil cp "$BUILD_TEMP_FOLDER/trantor2-cli.latest.tar.gz" oss://terminus-trantor/tools/cli/
-$BUILD_TEMP_FOLDER/oss-upload-tools/ossutil cp "$BUILD_TEMP_FOLDER/$historicVersion" oss://terminus-trantor/tools/cli/history/
+$BUILD_TEMP_FOLDER/oss-upload-tools/ossutil cp ./trantor2-cli/install.sh oss://terminus-trantor/tools/cli2/
+$BUILD_TEMP_FOLDER/oss-upload-tools/ossutil cp "$BUILD_TEMP_FOLDER/trantor2-cli.latest.tar.gz" oss://terminus-trantor/tools/cli2/
+$BUILD_TEMP_FOLDER/oss-upload-tools/ossutil cp "$BUILD_TEMP_FOLDER/$historicVersion" oss://terminus-trantor/tools/cli2/history/
 
 trantor_sha256=$(shasum -a 256 "$BUILD_TEMP_FOLDER/trantor2-cli.latest.tar.gz")
 trantor_cli_file_sha256=${trantor_sha256:0:64}
