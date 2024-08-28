@@ -23,39 +23,33 @@
         </dependency>
     </dependencies>
     <build>
+        <finalName>trantor2-cli</finalName>
         <plugins>
-            <!-- Maven Dependency Plugin 用于复制依赖项 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <version>3.1.2</version>
-                <executions>
-                    <execution>
-                        <id>copy-dependencies</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>copy-dependencies</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>../trantor2-cli/libexec/lib</outputDirectory>
-                            <includeScope>runtime</includeScope>
-                            <skip>${skipCopyDependencies}</skip>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>3.0.0</version>
                 <configuration>
-                    <finalName>trantor2-cli</finalName>
-                    <outputDirectory>../trantor2-cli/libexec</outputDirectory>
+                    <appendAssemblyId>false</appendAssemblyId>
+                    <outputDirectory>../trantor2-cli/libexec/</outputDirectory>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
                     <archive>
                         <manifest>
                             <mainClass>io.terminus.trantor2.MainKt</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

@@ -5,7 +5,7 @@ set -u
 TRANTOR_CLI_TEMP="/tmp/trantor2-cli.tar.gz"
 
 # trantor cli installation package
-TRANTOR_CLI_URL="https://terminus-trantor.oss-cn-hangzhou.aliyuncs.com/tools/cli/trantor2-cli.latest.tar.gz"
+TRANTOR_CLI_URL="https://terminus-trantor.oss-cn-hangzhou.aliyuncs.com/tools/cli2/trantor2-cli.latest.tar.gz"
 
 # install path
 TRANTOR_INSTALL_PATH="/usr/local/trantor2"

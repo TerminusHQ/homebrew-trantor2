@@ -23,7 +23,6 @@ class Trantor2 < Formula
 
   def install
     # Remove windows files
-    lib.install Dir["lib/*"]
     libexec.install Dir["libexec/*"]
     (bin/"trantor2").write buildExe()
   end

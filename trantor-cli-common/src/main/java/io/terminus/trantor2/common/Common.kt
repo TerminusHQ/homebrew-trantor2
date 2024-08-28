@@ -7,7 +7,6 @@ import java.io.File
 /**
  * @author wjx
  */
-val TRANTOR2_HOME_PATH = System.getenv("TRANTOR2_HOME") ?: throw IllegalStateException("ENV [TRANTOR2_HOME] not set")
 val TRANTOR2_VERSION = System.getenv("TRANTOR2_CLI_VERSION") ?: "UNKNOWN"
 val TRANTOR2_WORKSPACE_PATH = System.getenv("TRANTOR2_WORKSPACE") ?: "${System.getProperty("user.home")}/.trantor2"
 lateinit var trantorCliConfig: TrantorCliConfig

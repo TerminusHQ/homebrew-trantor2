@@ -34,7 +34,6 @@
         <slf4j.version>1.7.36</slf4j.version>
         <slf4j.log4j.version>2.17.2</slf4j.log4j.version>
         <okhttp3.version>4.12.0</okhttp3.version>
-        <skipCopyDependencies>true</skipCopyDependencies>
     </properties>
 
     <dependencyManagement>

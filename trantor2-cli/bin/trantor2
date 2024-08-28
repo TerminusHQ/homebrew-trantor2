@@ -1,7 +1,5 @@
 #!/bin/sh
 
-#mvn clean install -U -DskipTests -DskipCopyDependencies=false
-
 # resolve links - $0 may be a link to Trantor home
 PRG="$0"
 # need this for relative symlinks
@@ -17,6 +15,7 @@ done
 TRANTOR2_HOME=$(dirname "$PRG")/..
 # make it fully qualified
 TRANTOR2_HOME=$(cd "$TRANTOR2_HOME" && pwd)
+echo "$TRANTOR2_HOME"
 # check the Java execution environment
 if [ -z "$JAVA_HOME" ]; then
   JAVACMD=$(which java)
@@ -32,10 +31,6 @@ fi
 
 CLASSWORLDS_LAUNCHER=io.terminus.trantor2.MainKt
 
-for i in $TRANTOR_HOME/libexec/lib/*.jar; do
-  CLASSWORLDS_JAR="$CLASSWORLDS_JAR":"$i"
-done
-
 for i in $TRANTOR2_HOME/libexec/*.jar; do
   CLASSWORLDS_JAR="$CLASSWORLDS_JAR":"$i"
 done
@@ -46,9 +41,8 @@ export TRANTOR2_HOME="$TRANTOR2_HOME"
 TRANTOR_JVM_LOG_HOME=-XX:ErrorFile=$TRANTOR2_HOME/log/trantorCli.log
 export TRANTOR_JVM_LOG_HOME
 
-# run trantor cli
+# run trantor2 cli
 exec "$JAVACMD" \
-  $TRANTOR_DEBUG_OPTS \
   -client \
   -classpath "${CLASSWORLDS_JAR}" \
   ${CLASSWORLDS_LAUNCHER} "$@"
