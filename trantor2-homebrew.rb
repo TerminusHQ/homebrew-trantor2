@@ -1,5 +1,5 @@
 class Trantor < Formula
-  desc "Terminus Trantor CLI"
+  desc "Terminus Trantor2 CLI"
   homepage "https://www.terminus.io/"
   url "https://terminus-trantor.oss-cn-hangzhou.aliyuncs.com/tools/cli/trantor2-cli.latest.tar.gz"
   version "{{version}}"
@@ -25,11 +25,11 @@ class Trantor < Formula
     # Remove windows files
     lib.install Dir["lib/*"]
     libexec.install Dir["libexec/*"]
-    (bin/"trantor").write buildExe()
+    (bin/"trantor2").write buildExe()
   end
 
   test do
-    system "#{bin}/trantor", "version"
+    system "#{bin}/trantor2", "version"
   end
 
 end

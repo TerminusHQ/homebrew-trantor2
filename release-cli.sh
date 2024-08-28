@@ -20,12 +20,13 @@ function e() {
 BUILD_TEMP_FOLDER="./build_temp_folder"
 CURRENT_VERSION=""
 # 参数检查
-if [[ $# != 2 ]]; then
-  e "Please pass OSS_ACCESS_KEY_ID and OSS_ACCESS_KEY_SECRET(see: ./build.sh keyId keySecret)"
+if [[ $# != 3 ]]; then
+  e "Please pass OSS_ACCESS_KEY_ID and OSS_ACCESS_KEY_SECRET and GITHUB_TOKEN(see: ./build.sh keyId keySecret token)"
   exit 1
 fi
 OSS_ACCESS_KEY_ID=$1
 OSS_ACCESS_KEY_SECRET=$2
+GITHUB_TOKEN=$3
 # 编译
 mvn clean package -Dmaven.test.skip
 CURRENT_VERSION=$(mvn -q -Dexec.executable="echo" -Dexec.args="\${project.version}" --non-recursive exec:exec)
@@ -74,17 +75,17 @@ i "build done."
 # 下载 oss-upload-tools
 if [ ! -d "$BUILD_TEMP_FOLDER/oss-upload-tools" ]; then
   i "download oss-upload tools..."
-  curl -s -o "$BUILD_TEMP_FOLDER/osscmd.tar.gz" http://terminus-paas.oss.aliyuncs.com/osscmd.tar.gz
   mkdir -p "$BUILD_TEMP_FOLDER/oss-upload-tools"
-  tar -zxvf "$BUILD_TEMP_FOLDER/osscmd.tar.gz" -C "$BUILD_TEMP_FOLDER/oss-upload-tools"
-  rm -f "$BUILD_TEMP_FOLDER/osscmd.tar.gz"
+  curl -o $BUILD_TEMP_FOLDER/oss-upload-tools/ossutil https://gosspublic.alicdn.com/ossutil/1.7.16/ossutilmac64
+  chmod +x $BUILD_TEMP_FOLDER/oss-upload-tools/ossutil
 fi
 
 # 上传到OSS
 i "upload trantor2-cli to OSS..."
-$BUILD_TEMP_FOLDER/oss-upload-tools/osscmd --host=oss-cn-hangzhou.aliyuncs.com --id="$OSS_ACCESS_KEY_ID" --key="$OSS_ACCESS_KEY_SECRET" upload ./trantor2-cli/install.sh oss://terminus-trantor/tools/cli/
-$BUILD_TEMP_FOLDER/oss-upload-tools/osscmd --host=oss-cn-hangzhou.aliyuncs.com --id="$OSS_ACCESS_KEY_ID" --key="$OSS_ACCESS_KEY_SECRET" upload "$BUILD_TEMP_FOLDER/trantor2-cli.latest.tar.gz" oss://terminus-trantor/tools/cli/
-$BUILD_TEMP_FOLDER/oss-upload-tools/osscmd --host=oss-cn-hangzhou.aliyuncs.com --id="$OSS_ACCESS_KEY_ID" --key="$OSS_ACCESS_KEY_SECRET" upload "$BUILD_TEMP_FOLDER/$historicVersion" oss://terminus-trantor/tools/cli/history/
+$BUILD_TEMP_FOLDER/oss-upload-tools/ossutil config -e oss-cn-hangzhou.aliyuncs.com -i "$OSS_ACCESS_KEY_ID" -k "$OSS_ACCESS_KEY_SECRET"
+$BUILD_TEMP_FOLDER/oss-upload-tools/ossutil cp ./trantor2-cli/install.sh oss://terminus-trantor/tools/cli/
+$BUILD_TEMP_FOLDER/oss-upload-tools/ossutil cp "$BUILD_TEMP_FOLDER/trantor2-cli.latest.tar.gz" oss://terminus-trantor/tools/cli/
+$BUILD_TEMP_FOLDER/oss-upload-tools/ossutil cp "$BUILD_TEMP_FOLDER/$historicVersion" oss://terminus-trantor/tools/cli/history/
 
 trantor_sha256=$(shasum -a 256 "$BUILD_TEMP_FOLDER/trantor2-cli.latest.tar.gz")
 trantor_cli_file_sha256=${trantor_sha256:0:64}
@@ -103,10 +104,13 @@ if [ -z "$trantor_cli_file_sha256" ]; then
 fi
 # 修改、提交trantor.rb
 cd $BUILD_TEMP_FOLDER
-git clone https://github.com/TerminusHQ/homebrew-trantor2.git
-sed "s/{{version}}/$CURRENT_VERSION/g" ../trantor-homebrew.rb | sed "s/{{trantor_cli_file_sha256}}/$trantor_cli_file_sha256/g" >"trantor2.rb"
-mv trantor2.rb homebrew-trantor/trantor2.rb
+git clone "https://$GITHUB_TOKEN"@github.com/TerminusHQ/homebrew-trantor2.git
+sed "s/{{version}}/$CURRENT_VERSION/g" ../trantor2-homebrew.rb | sed "s/{{trantor_cli_file_sha256}}/$trantor_cli_file_sha256/g" >"trantor2.rb"
+mv trantor2.rb homebrew-trantor2/trantor2.rb
+echo "hhhhhh"
+cat homebrew-trantor2/trantor2.rb
 cd homebrew-trantor2
+git add trantor2.rb
 git commit -am "update trantor cli version to [$CURRENT_VERSION], trantor commit[$trantor_git_commit]"
 git push
 cd .. && rm -rf homebrew-trantor2
