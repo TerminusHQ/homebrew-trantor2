@@ -32,7 +32,11 @@ fi
 
 CLASSWORLDS_LAUNCHER=io.terminus.trantor2.MainKt
 
-for i in $TRANTOR2_HOME/lib/*.jar; do
+for i in $TRANTOR_HOME/libexec/lib/*.jar; do
+  CLASSWORLDS_JAR="$CLASSWORLDS_JAR":"$i"
+done
+
+for i in $TRANTOR2_HOME/libexec/*.jar; do
   CLASSWORLDS_JAR="$CLASSWORLDS_JAR":"$i"
 done
 

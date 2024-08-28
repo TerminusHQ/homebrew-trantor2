@@ -8,7 +8,7 @@ import java.io.File
 /**
  * @author wjx
  */
-val RUNTIME_PATH = "$TRANTOR2_HOME_PATH/lib/dockerfiles/"
+val RUNTIME_PATH = "$TRANTOR2_HOME_PATH/libexec/dockerfiles/"
 
 class Run : CliktCommand("启动 Trantor2 底座环境") {
     private val version by argument("version", help = "Trantor2 版本")
