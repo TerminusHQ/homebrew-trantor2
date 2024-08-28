@@ -50,6 +50,11 @@
                 <configuration>
                     <finalName>trantor2-cli</finalName>
                     <outputDirectory>../trantor2-cli/libexec</outputDirectory>
+                    <archive>
+                        <manifest>
+                            <mainClass>io.terminus.trantor2.MainKt</mainClass>
+                        </manifest>
+                    </archive>
                 </configuration>
             </plugin>
         </plugins>
