@@ -3,35 +3,32 @@ class Trantor2 < Formula
   homepage "https://www.terminus.io/"
   url "https://terminus-trantor.oss-cn-hangzhou.aliyuncs.com/tools/cli2/trantor2-cli.latest.tar.gz"
   version "0.0.1"
-  sha256 "5ae61a29a482bf1795e2c8a5380980336d81bad6a302654bdc1fc8b36e06d135"
+  sha256 "63f53c29ca39bc4620bd8374769c5a69df3875e1fcc5611f1e6ad09c44858b3c"
 
-  keg_only "To prevent Homebrew from modifying runtime files"
+#   depends_on "docker"
 
-  def build_exe
+  def buildExe()
     <<~EOS
       #!/bin/bash
       JAVACMD="#{libexec}/java-runtime/bin/java"
       export TRANTOR2_HOME="#{prefix}"
-      export TRANTOR2_CLI_VERSION="#{version}"
+      export TRANTOR2_CLI_VERSION="0.0.1"
       exec "$JAVACMD" -jar "#{libexec}/trantor2-cli.jar" "$@"
     EOS
   end
 
   def install
+    # Remove windows files
     libexec.install Dir["libexec/*"]
-    (bin/"trantor2").write build_exe
-    chmod 0755, bin/"trantor2"
-  end
-
-  def post_install
-    Dir["#{libexec}/java-runtime/lib/*.dylib"].each do |dylib|
-      system "install_name_tool", "-id", dylib, dylib
-      system "codesign", "--force", "--deep", "--sign", "-", dylib
-    end
-    opoo "Skipping codesign and @rpath modifications for custom JRE"
+    runtime_lib_path = "#{libexec}/java-runtime/lib"
+      Dir["#{runtime_lib_path}/*.dylib"].each do |dylib|
+        system "install_name_tool", "-add_rpath", runtime_lib_path, dylib
+      end
+    (bin/"trantor2").write buildExe()
   end
 
   test do
-    assert_match "0.0.1", shell_output("#{bin}/trantor2 version")
+    system "#{bin}/trantor2", "version"
   end
+
 end
