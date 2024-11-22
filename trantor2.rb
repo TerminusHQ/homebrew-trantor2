@@ -3,10 +3,10 @@ class Trantor2 < Formula
   homepage "https://www.terminus.io/"
   url "https://terminus-trantor.oss-cn-hangzhou.aliyuncs.com/tools/cli2/trantor2-cli.latest.tar.gz"
   version "0.0.1"
-  sha256 "c2bb8d9a9d73ca21b67e648ca4484fb60040507ef1854f5eb82d611b352a83c2"
+  sha256 "4778bf0636f3bd1296bdb47bde148ed9fd6355d62c647f6f3496d4d43d7d822f"
 
 #   depends_on "docker"
-
+  skip_clean "java-runtime"
   def buildExe()
     <<~EOS
       #!/bin/bash
