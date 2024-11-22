@@ -3,18 +3,14 @@ class Trantor2 < Formula
   homepage "https://www.terminus.io/"
   url "https://terminus-trantor.oss-cn-hangzhou.aliyuncs.com/tools/cli2/trantor2-cli.latest.tar.gz"
   version "0.0.1"
-  sha256 "b57fb93f044239e453a7ae487cbd632e5a1f89b9655e7a5592fd5c3427365a83"
+  sha256 "23f3223a2097b4db3b0916689072902c94954c808693d17b3117e09797f8d7d5"
 
 #   depends_on "docker"
 
   def buildExe()
     <<~EOS
       #!/bin/bash
-      if [ -z "$JAVA_HOME" ] ; then
-        JAVACMD=`which java`
-      else
-        JAVACMD="$JAVA_HOME/bin/java"
-      fi
+      JAVACMD="#{java-runtime}/bin/java"
       export TRANTOR2_HOME="#{prefix}"
       export TRANTOR2_CLI_VERSION="0.0.1"
       exec "$JAVACMD" -jar "#{libexec}/trantor2-cli.jar" "$@"
@@ -24,6 +20,7 @@ class Trantor2 < Formula
   def install
     # Remove windows files
     libexec.install Dir["libexec/*"]
+    java-runtime.install Dir["java-runtime/*"]
     (bin/"trantor2").write buildExe()
   end
 
