@@ -3,11 +3,11 @@ class Trantor2 < Formula
   homepage "https://www.terminus.io/"
   url "https://terminus-new-trantor.oss-cn-hangzhou.aliyuncs.com/tools/cli2/trantor2-cli.latest.tar.gz"
   version "0.0.1"
-  sha256 "4ebdc4f937027e16793c0f32b0b83cf61c574b7e87a3bf757f6293b1dad33f4d"
+  sha256 "3b8edbcfe7a277bbe3d912c809e43ae277ab35443a4e26bba90162c0e16fd0e0"
 
   # depends_on "docker"
-  # 依赖 openjdk@17
   depends_on "openjdk@17"
+  depends_on "mysql@8.4"
 
   def buildExe()
     <<~EOS
