@@ -3,7 +3,7 @@ class Trantor2 < Formula
   homepage "https://www.terminus.io/"
   url "https://terminus-new-trantor.oss-cn-hangzhou.aliyuncs.com/tools/cli2/trantor2-cli.latest.tar.gz"
   version "0.0.5"
-  sha256 "92ea28e31ecf731a342e35ebb05eb0aeb0013de124ecb11abddc8b97284fb240"
+  sha256 "1ace8ff1c672286ed12200e3a00430db555662d401c0ef4196de348620e03428"
 
   # depends_on "docker"
   depends_on "openjdk@17"
