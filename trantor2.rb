@@ -2,8 +2,8 @@ class Trantor2 < Formula
   desc "Terminus Trantor2 CLI"
   homepage "https://www.terminus.io/"
   url "https://terminus-new-trantor.oss-cn-hangzhou.aliyuncs.com/tools/cli2/trantor2-cli.latest.tar.gz"
-  version "0.0.5"
-  sha256 "1ace8ff1c672286ed12200e3a00430db555662d401c0ef4196de348620e03428"
+  version "0.0.7"
+  sha256 "448274ff814d3b8ea720df20ed1230e574a8506ec87f9e1b9fbb4572cb4f604b"
 
   # depends_on "docker"
   depends_on "openjdk@17"
@@ -15,7 +15,7 @@ class Trantor2 < Formula
       export JAVA_HOME="#{Formula["openjdk@17"].opt_prefix}"
       JAVACMD="$JAVA_HOME/bin/java"
       export TRANTOR2_HOME="#{prefix}"
-      export TRANTOR2_CLI_VERSION="0.0.5"
+      export TRANTOR2_CLI_VERSION="0.0.7"
       exec "$JAVACMD" -jar "#{libexec}/trantor2-cli.jar" "$@"
     EOS
   end
